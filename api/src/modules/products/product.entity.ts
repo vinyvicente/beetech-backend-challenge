@@ -8,7 +8,7 @@ import {
 
 import { Type } from 'class-transformer';
 
-@Entity()
+@Entity('products')
 export class ProductEntity {
   @PrimaryGeneratedColumn()
   id: number;
