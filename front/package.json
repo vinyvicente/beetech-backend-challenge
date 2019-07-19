@@ -1,6 +1,7 @@
 {
   "name": "front",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "Vinicius V. de Oliveira <vinyvicente@gmail.com>",
   "private": true,
   "scripts": {
     "start": "node app.js"
