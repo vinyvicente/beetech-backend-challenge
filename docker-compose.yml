@@ -5,7 +5,7 @@ services:
     container_name: beetech_postgres
     image: postgres:10-alpine
     ports:
-      - '5531:5432'
+      - '5432:5432'
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=beet3ch

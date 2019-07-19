@@ -3,11 +3,11 @@ import { ProductEntity } from './modules/products/product.entity';
 
 const typeOrmConfig: PostgresConnectionOptions = {
   type: 'postgres',
-  host: 'localhost',
+  host: 'beetech_postgres',
   port: 5432,
-  username: 'typeormtest',
-  password: 'password',
-  database: 'typeormtest',
+  username: 'root',
+  password: 'beet3ch',
+  database: 'beetech',
   synchronize: true,
   logging: false,
   entities: [ProductEntity],
