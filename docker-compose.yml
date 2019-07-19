@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  beetech_postgres:
+    container_name: beetech_postgres
+    image: postgres:10-alpine
+    ports:
+      - '5531:5432'
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=beet3ch
+      - POSTGRES_DB=beetech
+    volumes:
+      - ./docker-volumes/postgresql:/var/lib/postgresql
+
+  beetech_backend:
+    build: .
+    volumes:
+      - "./api:/usr/src/app"
+    container_name: beetech_backend
+    ports:
+      - '3000:3000'
+    depends_on:
+      - beetech_postgres
+
+  beetech_frontend:
+    build: .
+    volumes:
+      - "./front:/usr/src/app"
+    container_name: beetech_frontend
+    ports:
+      - '3001:8080'
+    depends_on:
+      - beetech_backend
