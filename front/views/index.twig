@@ -1,6 +1,74 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{title}}</h1>
-  <p>Welcome to {{title}}</p>
+  <form class="form-signin" method="post">
+    <h1 class="h3 mb-3 font-weight-normal">login</h1>
+    <label for="text" class="sr-only">User</label>
+    <input type="text" id="text" class="form-control" placeholder="Your user" value="admin" required autofocus>
+    <label for="inputPassword" class="sr-only">Senha</label>
+    <input type="password" id="inputPassword" class="form-control" value="beet3ch" placeholder="Senha" required>
+    <div class="mb-3"></div>
+    <button class="btn btn-lg btn-primary btn-block" id="submitForm" type="button">Login</button>
+    <div class="mb-3"></div>
+    <div class="alert"></div>
+  </form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  $(document).ready(() => {
+    const endpoint = 'http://localhost:3000';
+    const access = {
+      toProducts() {
+        window.location.href = '/products';
+
+        return true;
+      },
+      load() {
+        if (localStorage.getItem(`beetechAccessToken`)) {
+          this.toProducts();
+        }
+
+        const submit = document.getElementById(`submitForm`);
+        submit.addEventListener(`click`, this.login, false);
+      },
+      login() {
+        const alert = $(`.alert`);
+        alert.removeClass('alert-danger').text('').append('Searching...');
+
+        const user = $('#text').val();
+        const password = $('#inputPassword').val();
+
+        try {
+          $.post(endpoint + '/api/login', {username: user, password}, (data) => {
+            if (data.access_token) {
+              localStorage.setItem(`beetechAccessToken`, data.access_token);
+
+              this.toProducts();
+            } else {
+              alert.addClass('alert-danger');
+              alert.text('An problem occurred');
+            }
+          }, 'json').fail(function (response) {
+            alert.addClass('alert-danger');
+            alert.text('An problem occurred: ' + response.statusText);
+          });
+
+        } catch (e) {
+          alert.addClass('alert-danger');
+          alert.text('An problem occurred');
+        }
+
+        return false;
+      }
+    };
+
+    access.load()
+  })
+</script>
+{% endblock %}
+
+
+{% block styles %}
+<link href="/stylesheets/signin.css" rel="stylesheet" />
 {% endblock %}
