@@ -13,6 +13,18 @@ services:
     volumes:
       - ./docker-volumes/postgresql:/var/lib/postgresql
 
+  beetech_postgres_test:
+    container_name: beetech_postgres_test
+    image: postgres:10-alpine
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=beet3ch
+      - POSTGRES_DB=beetech_test
+    volumes:
+      - ./docker-volumes/postgresql_test:/var/lib/postgresql
+
   beetech_backend:
     build: .
     volumes:
